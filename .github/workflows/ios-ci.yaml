@@ -1,0 +1,26 @@
+name: iOS CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-13
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Xcode
+        run: sudo xcode-select -switch /Applications/Xcode.app
+
+      - name: Build and test
+        run: |
+          xcodebuild -scheme "BookManagerSwiftUI" \
+                     -destination 'platform=iOS Simulator,name=iPhone 13,OS=16.2' \
+                     clean build test

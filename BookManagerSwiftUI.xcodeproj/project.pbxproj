@@ -29,9 +29,22 @@
 		34C35D1D2CCD87FC00314799 /* BookManagerSwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BookManagerSwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		34C35D4B2CCD899D00314799 /* Exceptions for "BookManagerSwiftUI" folder in "Compile Sources" phase from "BookManagerSwiftUI" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 34C35CFE2CCD87FA00314799 /* Sources */;
+			membershipExceptions = (
+				Resources/Books.json,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		34C35D042CCD87FA00314799 /* BookManagerSwiftUI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				34C35D4B2CCD899D00314799 /* Exceptions for "BookManagerSwiftUI" folder in "Compile Sources" phase from "BookManagerSwiftUI" target */,
+			);
 			path = BookManagerSwiftUI;
 			sourceTree = "<group>";
 		};

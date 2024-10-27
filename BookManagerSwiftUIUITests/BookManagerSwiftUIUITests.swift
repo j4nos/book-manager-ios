@@ -8,36 +8,35 @@
 import XCTest
 
 final class BookManagerSwiftUIUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    
+    func testAddBookToFavoritesAndCheckFavorites() {
         let app = XCUIApplication()
+        app.terminate()
+        app.launchEnvironment["UITesting"] = "true"
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    @MainActor
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+        
+        // Step 1: Locate a specific book in the list by its title
+        let bookTitle = "1984, George Orwell"
+        let bookRow = app.buttons[bookTitle]
+        XCTAssertTrue(bookRow.exists, "The book should be present in the list.")
+        
+        // Step 2: Tap the book row to open details
+        bookRow.tap()
+        
+        // Step 3: Mark the book as favorite
+        let favoriteButton = app.buttons["Add to Favorites"] // Update to match accessibility label
+        XCTAssertTrue(favoriteButton.exists, "The favorite button should exist on the detail page.")
+        favoriteButton.tap()
+        
+        // Step 4: Go back to the main list
+        app.navigationBars.buttons["Books"].tap() // Adjust if there's a different back navigation
+        
+        // Step 5: Navigate to Favorites view
+        let favoritesTab = app.tabBars.buttons["Favorites"] // Update if tab is different
+        favoritesTab.tap()
+        
+        // Step 6: Verify the book is in the favorites list
+        let favoriteBookRow = app.staticTexts["1984"]
+        XCTAssertTrue(favoriteBookRow.exists, "The book should appear in the favorites list.")
     }
 }
