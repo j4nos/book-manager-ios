@@ -1,4 +1,4 @@
-name: iOS CI
+name: iOS Build and Test
 
 on:
   push:
@@ -10,20 +10,25 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-latest
 
     steps:
+      # 1. Check out the repository
       - name: Check out repository
         uses: actions/checkout@v3
 
-      - name: List available Xcode versions
-        run: ls /Applications | grep Xcode
+      # 2. Set up the specified Xcode version
+      - name: Set up Xcode 16
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16'   # Specify the Xcode version needed
 
-      - name: Set up Xcode 15.2
-        run: sudo xcode-select -switch /Applications/Xcode_15.2.app
-
-      - name: Build and test
+      # 3. Install dependencies using CocoaPods, Carthage, or Swift Package Manager if needed
+      - name: Install dependencies
         run: |
-          xcodebuild -scheme "BookManagerSwiftUI" \
-                     -destination 'platform=iOS Simulator,name=iPhone 13,OS=16.2' \
-                     clean build test
+          brew install cocoapods || true   # Example with CocoaPods, adjust for your dependency manager
+          pod install
+
+      # 4. Build and run tests
+      - name: Build and Test
+        run: xcodebuild -scheme "YourScheme" -destination 'platform=iOS Simulator,name=iPhone 14' test
